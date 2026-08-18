@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AwaisTraders ISP - Secure Login</title>
+    <style>
+        body { background-color: #0b0b0b; color: #ffffff; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; display: flex; flex-direction: column; justify-content: space-between; align-items: center; min-height: 100vh; margin: 0; }
+        header { width: 100%; background: #141414; border-bottom: 2px solid #d4af37; padding: 15px 0; text-align: center; box-shadow: 0 4px 12px rgba(212, 175, 55, 0.2); }
+        header h1 { color: #ffffff; margin: 0; font-size: 22px; letter-spacing: 2px; text-shadow: 0 0 10px rgba(212, 175, 55, 0.4); }
+        header span { color: #d4af37; }
+        footer { width: 100%; background: #141414; border-top: 1px solid #d4af37; padding: 12px 0; text-align: center; font-size: 13px; color: #ffffff; letter-spacing: 1px; }
+        .login-card { background: #141414; border: 2px solid #d4af37; padding: 35px; border-radius: 12px; width: 350px; box-shadow: 0 8px 24px rgba(212, 175, 55, 0.2); text-align: center; margin: auto; }
+        h2 { color: #ffffff; margin-bottom: 25px; letter-spacing: 1px; font-size: 20px; }
+        label { color: #d4af37; font-size: 13px; font-weight: bold; display: block; text-align: left; margin-bottom: 5px; }
+        input { width: 100%; padding: 12px; margin: 10px 0 20px 0; background: #0b0b0b; border: 1px solid #d4af37; color: #ffffff; border-radius: 6px; box-sizing: border-box; font-size: 14px; }
+        input::placeholder { color: #888888; }
+        input:focus { outline: none; border-color: #ffffff; box-shadow: 0 0 8px rgba(255, 255, 255, 0.3); }
+        button { width: 100%; padding: 12px; background: linear-gradient(135deg, #d4af37 0%, #aa8c2c 100%); color: #0b0b0b; font-weight: bold; border: none; border-radius: 6px; cursor: pointer; margin-top: 5px; transition: 0.3s; font-size: 15px; letter-spacing: 1px; }
+        button:hover { background: linear-gradient(135deg, #ffffff 0%, #d4af37 100%); transform: translateY(-1px); }
+    </style>
+</head>
+<body>
+    <header>
+        <h1><span>AWAIS</span> TRADERS</h1>
+    </header>
+    <div class="login-card">
+        <h2>LOGIN</h2>
+        <form action="/login" method="POST">
+            <label>GMAIL ADDRESS</label>
+            <input type="email" name="email" placeholder="Enter your Gmail" required>
+            
+            <label>PASSWORD</label>
+            <input type="password" name="password" placeholder="Enter your password" required>
+            
+            <button type="submit">LOGIN</button>
+        </form>
+    </div>
+    <footer>
+        &copy; 2026 Awais Traders ISP Operations. All Rights Reserved.
+    </footer>
+</body>
+</html>

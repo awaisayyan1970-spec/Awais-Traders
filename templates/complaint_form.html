@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AwaisTraders - Register Complaint</title>
+    <style>
+        body { background-color: #0b0b0b; color: #ffffff; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; display: flex; flex-direction: column; justify-content: space-between; align-items: center; min-height: 100vh; margin: 0; }
+        header { width: 100%; background: #141414; border-bottom: 2px solid #d4af37; padding: 15px 0; text-align: center; box-shadow: 0 4px 12px rgba(212, 175, 55, 0.2); }
+        header h1 { color: #ffffff; margin: 0; font-size: 22px; letter-spacing: 2px; text-shadow: 0 0 10px rgba(212, 175, 55, 0.4); }
+        header span { color: #d4af37; }
+        footer { width: 100%; background: #141414; border-top: 1px solid #d4af37; padding: 12px 0; text-align: center; font-size: 13px; color: #ffffff; letter-spacing: 1px; }
+        .form-card { background: #141414; border: 2px solid #d4af37; padding: 30px; border-radius: 12px; width: 420px; box-shadow: 0 8px 24px rgba(212, 175, 55, 0.15); margin: 20px auto; }
+        h2 { color: #ffffff; text-align: center; margin-bottom: 20px; font-size: 18px; letter-spacing: 1px; }
+        label { font-size: 13px; color: #d4af37; font-weight: bold; display: block; margin-top: 12px; }
+        input, textarea { width: 100%; padding: 10px; margin-top: 5px; background: #0b0b0b; border: 1px solid #d4af37; color: #ffffff; border-radius: 6px; box-sizing: border-box; font-size: 14px; }
+        input::placeholder, textarea::placeholder { color: #888888; }
+        input:focus, textarea:focus { outline: none; border-color: #ffffff; box-shadow: 0 0 8px rgba(255, 255, 255, 0.3); }
+        .btn-submit { width: 100%; padding: 14px; background-color: #2e7d32; color: #ffffff; font-weight: bold; border: none; border-radius: 6px; cursor: pointer; margin-top: 25px; font-size: 16px; box-shadow: 0 4px 12px rgba(46, 125, 50, 0.4); transition: 0.3s; letter-spacing: 1px; }
+        .btn-submit:hover { background-color: #388e3c; transform: translateY(-1px); }
+    </style>
+</head>
+<body>
+    <header>
+        <h1><span>AWAIS</span> TRADERS</h1>
+    </header>
+    
+    <div class="form-card">
+        <h2>SUPPORT COMPLAINT PORTAL</h2>
+        <form action="/submit-complaint" method="POST">
+            <label>PHONE NUMBER</label>
+            <input type="text" name="phone" placeholder="e.g., 03001234567" required>
+
+            <label>PHYSICAL ADDRESS</label>
+            <input type="text" name="address" placeholder="Street, Area, City" required>
+
+            <label>SUBSCRIBER ID / ACCOUNT NUMBER</label>
+            <input type="text" name="subscriber_id" placeholder="Enter your ISP ID" required>
+
+            <label>COMPLAINT DETAILS</label>
+            <textarea name="complaint_text" rows="3" placeholder="Describe your connection issue..." required></textarea>
+
+            <button type="submit" class="btn-submit">SUBMIT</button>
+        </form>
+    </div>
+
+    <footer>
+        &copy; 2026 Awais Traders ISP Operations. All Rights Reserved.
+    </footer>
+</body>
+</html>

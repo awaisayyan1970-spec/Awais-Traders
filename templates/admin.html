@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AwaisTraders - Admin Command Center</title>
+    <style>
+        body { background-color: #0b0b0b; color: #ffffff; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; display: flex; flex-direction: column; min-height: 100vh; }
+        header { width: 100%; background: #141414; border-bottom: 2px solid #d4af37; padding: 20px 30px; display: flex; justify-content: space-between; align-items: center; box-sizing: border-box; box-shadow: 0 4px 12px rgba(212, 175, 55, 0.2); }
+        header h1 { color: #ffffff; margin: 0; font-size: 24px; letter-spacing: 2px; }
+        header h1 span { color: #d4af37; }
+        header .tag { color: #d4af37; font-weight: bold; font-size: 14px; letter-spacing: 1px; }
+        .content { padding: 30px; flex: 1; }
+        footer { width: 100%; background: #141414; border-top: 1px solid #d4af37; padding: 15px 0; text-align: center; font-size: 13px; color: #ffffff; letter-spacing: 1px; }
+        h2 { color: #ffffff; margin-top: 0; font-size: 18px; letter-spacing: 1px; }
+        .grid { display: grid; grid-template-columns: 1fr; gap: 30px; }
+        section { background: #141414; border: 1px solid #d4af37; padding: 25px; border-radius: 10px; box-shadow: 0 4px 16px rgba(212, 175, 55, 0.1); }
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        th, td { border: 1px solid #2b2b2b; padding: 12px; text-align: left; font-size: 14px; color: #ffffff; }
+        th { background: #1f1b09; color: #d4af37; letter-spacing: 1px; }
+        tr:nth-child(even) { background: #101010; }
+        input[type="text"] { padding: 8px; background: #0b0b0b; border: 1px solid #d4af37; color: #ffffff; border-radius: 4px; width: 140px; }
+        input[type="text"]::placeholder { color: #888888; }
+        input[type="text"]:focus { outline: none; border-color: #ffffff; box-shadow: 0 0 6px rgba(255, 255, 255, 0.3); }
+        .btn-ticket { background: linear-gradient(135deg, #d4af37 0%, #aa8c2c 100%); color: #0b0b0b; border: none; padding: 8px 14px; font-weight: bold; border-radius: 4px; cursor: pointer; transition: 0.3s; }
+        .btn-ticket:hover { background: linear-gradient(135deg, #ffffff 0%, #d4af37 100%); }
+        .badge { background: #2e7d32; color: white; padding: 4px 8px; border-radius: 4px; font-size: 11px; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1><span>AWAIS</span> TRADERS</h1>
+        <div class="tag">SECURE MASTER CONTROL CENTER</div>
+    </header>
+
+    <div class="content">
+        <div class="grid">
+            <!-- Section 1: Customer Complaints Feed -->
+            <section>
+                <h2>INCOMING CUSTOMER COMPLAINTS & LOCATION TRACKING</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>PHONE</th>
+                            <th>ADDRESS</th>
+                            <th>SUBSCRIBER ID</th>
+                            <th>COMPLAINT</th>
+                            <th>STATUS</th>
+                            <th>GENERATE TICKET FOR STAFF</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for c in complaints %}
+                        <tr>
+                            <td>{{ c.id }}</td>
+                            <td>{{ c.phone }}</td>
+                            <td>{{ c.address }}</td>
+                            <td>{{ c.subscriber_id }}</td>
+                            <td>{{ c.complaint }}</td>
+                            <td><span class="badge">{{ c.status }}</span></td>
+                            <td>
+                                <form action="/admin/create-ticket/{{ c.id }}" method="POST" style="display: flex; gap: 8px;">
+                                    <input type="text" name="staff_name" placeholder="Staff Name" required>
+                                    <button type="submit" class="btn-ticket">Make Ticket</button>
+                                </form>
+                            </td>
+                        </tr>
+                        {% else %}
+                        <tr><td colspan="7" style="text-align: center; color: #888888;">No active complaints registered yet.</td></tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- Section 2: Active Tickets Handed to Staff -->
+            <section>
+                <h2>ACTIVE STAFF TICKETS</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>TICKET ID</th>
+                            <th>SUBSCRIBER ID</th>
+                            <th>PHONE</th>
+                            <th>ADDRESS</th>
+                            <th>ISSUE</th>
+                            <th>ASSIGNED STAFF</th>
+                            <th>STATUS</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for t in tickets %}
+                        <tr>
+                            <td>#{{ t.ticket_id }}</td>
+                            <td>{{ t.subscriber_id }}</td>
+                            <td>{{ t.phone }}</td>
+                            <td>{{ t.address }}</td>
+                            <td>{{ t.issue }}</td>
+                            <td>{{ t.assigned_staff }}</td>
+                            <td><span class="badge" style="background:#b78103;">{{ t.status }}</span></td>
+                        </tr>
+                        {% else %}
+                        <tr><td colspan="7" style="text-align: center; color: #888888;">No tickets generated yet.</td></tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- Section 3: Master Password & Encryption Directory -->
+            <section>
+                <h2>MASTER PASSWORD & ENCRYPTION DIRECTORY</h2>
+                <p style="font-size: 13px; color: #888888;">Secure credential storage with SHA-256 encryption. Accessible exclusively under your verified admin clearance.</p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>REGISTERED GMAIL</th>
+                            <th>SECURITY STATUS</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for email, data in users.items() %}
+                        <tr>
+                            <td>{{ email }}</td>
+                            <td style="color: #4caf50; font-weight: bold;">Encrypted & Protected</td>
+                        </tr>
+                        {% else %}
+                        <tr><td colspan="2" style="text-align: center; color: #888888;">Master admin session active.</td></tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </section>
+        </div>
+    </div>
+
+    <footer>
+        &copy; 2026 Awais Traders ISP Operations. All Rights Reserved. Master Command Center.
+    </footer>
+</body>
+</html>
