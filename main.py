@@ -17,10 +17,28 @@ complaints_db = []
 tickets_db = []
 active_sessions = set()
 
-# Automatically redirect root URL to the customer complaint portal
+# Central Hub / Landing Page at Root URL
 @app.get("/", response_class=HTMLResponse)
-def read_root():
-    return RedirectResponse(url="/portal", status_code=status.HTTP_303_SEE_OTHER)
+def read_root(request: Request):
+    return HTMLResponse("""
+        <html>
+            <head>
+                <title>Awais Traders - ISP Portal</title>
+                <style>
+                    body { background: #0b0b0b; color: #d4af37; font-family: Arial; text-align: center; padding-top: 50px; }
+                    .btn { display: inline-block; margin: 15px; padding: 15px 30px; background: #d4af37; color: #000; font-weight: bold; text-decoration: none; border-radius: 5px; font-size: 18px; }
+                    .btn:hover { background: #fff; }
+                </style>
+            </head>
+            <body>
+                <h1>AWAIS TRADERS ISP OPERATIONS</h1>
+                <p>Select your required portal below:</p>
+                <br>
+                <a href="/portal" class="btn">Customer Complaint Portal</a>
+                <a href="/admin" class="btn">Admin & Staff Dashboard</a>
+            </body>
+        </html>
+    """)
 
 @app.get("/login", response_class=HTMLResponse)
 def login_page(request: Request):
