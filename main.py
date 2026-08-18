@@ -6,10 +6,12 @@ import hashlib
 app = FastAPI()
 templates = Jinja2Templates(directory="templates")
 
-# Mock database for users, complaints, and tickets
+# Mock database for users, complaints, tickets, and staff
 users_db = {
     "admin@awaistraders.com": hashlib.sha256("admin123".encode()).hexdigest()
 }
+
+staff_db = ["Isfaq", "Waqas", "Ayyan", "Jabari"]
 
 complaints_db = []
 tickets_db = []
@@ -22,7 +24,7 @@ def read_root():
 
 @app.get("/login", response_class=HTMLResponse)
 def login_page(request: Request):
-    return templates.TemplateResponse("login.html", {"request": request})
+    return templates.TemplateResponse(request, "login.html", {})
 
 @app.post("/login")
 def login_post(request: Request, email: str = Form(...), password: str = Form(...)):
@@ -32,11 +34,11 @@ def login_post(request: Request, email: str = Form(...), password: str = Form(..
         response = RedirectResponse(url="/admin", status_code=status.HTTP_303_SEE_OTHER)
         response.set_cookie(key="admin_session", value=email)
         return response
-    return templates.TemplateResponse("login.html", {"request": request, "error": "Invalid Credentials"})
+    return templates.TemplateResponse(request, "login.html", {"error": "Invalid Credentials"})
 
 @app.get("/portal", response_class=HTMLResponse)
 def complaint_form(request: Request):
-    return templates.TemplateResponse("complaint_form.html", {"request": request})
+    return templates.TemplateResponse(request, "complaint_form.html", {})
 
 @app.post("/submit-complaint")
 def submit_complaint(request: Request, phone: str = Form(...), address: str = Form(...), subscriber_id: str = Form(...), complaint_text: str = Form(...)):
@@ -49,7 +51,7 @@ def submit_complaint(request: Request, phone: str = Form(...), address: str = Fo
         "complaint": complaint_text,
         "status": "Pending"
     })
-    return templates.TemplateResponse("success.html", {"request": request})
+    return templates.TemplateResponse(request, "success.html", {})
 
 @app.get("/admin", response_class=HTMLResponse)
 def admin_panel(request: Request):
@@ -57,11 +59,10 @@ def admin_panel(request: Request):
     if not session_email or session_email not in active_sessions:
         return RedirectResponse(url="/login", status_code=status.HTTP_303_SEE_OTHER)
     
-    return templates.TemplateResponse("admin.html", {
-        "request": request,
+    return templates.TemplateResponse(request, "admin.html", {
         "complaints": complaints_db,
         "tickets": tickets_db,
-        "users": users_db
+        "staff_list": staff_db
     })
 
 @app.post("/admin/create-ticket/{complaint_id}")
@@ -84,7 +85,6 @@ def create_ticket(request: Request, complaint_id: int, staff_name: str = Form(..
             "status": "Assigned"
         })
     return RedirectResponse(url="/admin", status_code=status.HTTP_303_SEE_OTHER)
-
 
 if __name__ == "__main__":
     import uvicorn
