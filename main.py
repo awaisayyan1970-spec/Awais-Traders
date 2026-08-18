@@ -84,3 +84,8 @@ def create_ticket(request: Request, complaint_id: int, staff_name: str = Form(..
             "status": "Assigned"
         })
     return RedirectResponse(url="/admin", status_code=status.HTTP_303_SEE_OTHER)
+
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run("main:app", host="127.0.0.1", port=8000, reload=True)
